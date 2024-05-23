@@ -24,16 +24,19 @@ def translate_text():
         output_text_widget.insert(END, f"Translation error: {e}")
 
 def toggle_theme():
-    if root.get_theme() == "breeze":
+    global current_theme
+    if current_theme == "light":
         root.set_theme("equilux")
-        root.configure(bg="#222222")
-        frame.configure(bg="#222222")
-        footer_label.configure(background="#222222", foreground="white")
+        root.configure(bg="#FF8C00")  # Тъмен оранжев за тъмната тема
+        frame.configure(bg="#FF8C00")
+        footer_label.configure(background="#FF8C00", foreground="white")
+        current_theme = "dark"
     else:
         root.set_theme("breeze")
-        root.configure(bg="#2c3e50")
-        frame.configure(bg="#2c3e50")
-        footer_label.configure(background="#2c3e50", foreground="white")
+        root.configure(bg="#FFA500")  # Светло оранжев за светлата тема
+        frame.configure(bg="#FFA500")
+        footer_label.configure(background="#FFA500", foreground="white")
+        current_theme = "light"
 
 # Create main application window with a modern theme
 root = ThemedTk(theme="breeze")
@@ -41,8 +44,9 @@ root.title("Text Translator")
 root.geometry("800x600")
 root.resizable(True, True)
 
-# Set a unique background color
-root.configure(bg="#2c3e50")
+# Set initial theme
+current_theme = "light"
+root.configure(bg="#FFA500")
 
 # Load an icon for the application (optional)
 try:
@@ -54,12 +58,12 @@ except Exception as e:
 
 # Styling options
 style = ttk.Style()
-style.configure('TLabel', font=('Arial', 14), background="#2c3e50", foreground="white")
+style.configure('TLabel', font=('Arial', 14), background="#FFA500", foreground="white")
 style.configure('TButton', font=('Arial', 14), background="#3498db", foreground="white")
 style.configure('TCombobox', font=('Arial', 14))
 
 # Create and place widgets
-frame = Frame(root, bg="#2c3e50")
+frame = Frame(root, bg="#FFA500")
 frame.pack(pady=20)
 
 source_lang_label = ttk.Label(frame, text="Source Language:")
@@ -115,12 +119,12 @@ def create_rounded_button(canvas, text, x, y, width, height, radius, color, comm
     canvas.tag_bind(button_id, "<Button-1>", on_click)
     canvas.tag_bind(text_id, "<Button-1>", on_click)
 
-canvas = Canvas(frame, width=200, height=70, bg="#2c3e50", highlightthickness=0)
+canvas = Canvas(frame, width=200, height=70, bg="#FFA500", highlightthickness=0)
 canvas.grid(row=4, column=0, columnspan=2, pady=20)
 create_rounded_button(canvas, "Translate", 10, 10, 180, 50, 25, "#3498db", translate_text)
 
 # Add a footer label (optional)
-footer_label = ttk.Label(root, text="Powered by Google Translate", font=('Arial', 10), background="#2c3e50", foreground="white")
+footer_label = ttk.Label(root, text="Powered by Google Translate", font=('Arial', 10), background="#FFA500", foreground="white")
 footer_label.pack(side=BOTTOM, pady=10)
 
 # Create a menu
